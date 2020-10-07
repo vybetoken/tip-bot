@@ -14,8 +14,7 @@ admin_ID1 = 0; //SET UUID HERE
 admin_ID2 = 0; //SET UUID HERE
 
 //POT DETAILS
-const potSeed =
-  "---- "; // GENERATE ETH WALLET AND SET DETAILS HERE
+const potSeed = "---- "; // GENERATE ETH WALLET AND SET DETAILS HERE
 const potAddress = "---- "; //GENERATE ETH WALLET AND SET DETAILS HERE
 user_db.defaults({ users: [] }).write();
 // ----------- command functions ---------//
@@ -58,12 +57,14 @@ setInterval(function (reply) {
   web3.eth.getBalance(potAddress).then((result) => {
     var ETHbalance = web3.utils.fromWei(result, "ether");
     console.log("ETH balance for fees: " + ETHbalance);
-    if (ETHbalance < 0.01){
-    var DM_reply = bot.reply(admin_ID1);
-    DM_reply.text("ETH balance for fees: " + ETHbalance)
-    DM_reply.text("You need to top up the main account with ETH or withdrawing will fail")
-    DM_reply.text(potAddress)
-  }
+    if (ETHbalance < 0.01) {
+      var DM_reply = bot.reply(admin_ID1);
+      DM_reply.text("ETH balance for fees: " + ETHbalance);
+      DM_reply.text(
+        "You need to top up the main account with ETH or withdrawing will fail"
+      );
+      DM_reply.text(potAddress);
+    }
   });
 }, 500000);
 
@@ -126,7 +127,9 @@ bot.command("price", function (msg, reply, next) {
             "\n" +
             "ETH: Ξ" +
             result.market_data.current_price.eth +
-            "\n\n|| [Buy]"+buy+" ||"
+            "\n\n|| [Buy]" +
+            buy +
+            " ||"
         );
       },
 
@@ -327,8 +330,8 @@ bot.command("withdraw", function (msg, reply, next) {
                   to: tokenAddress,
                   value: "0x00",
                   // all gas price is currently hard coded while testing to make it simpler. For production we will need to add the gasPrice variable
-                  gasPrice: "20000000000",
-                  gas: "500000",
+                  gasPrice: gasPrice,
+                  gas: "83565",
                   data: data,
                 };
                 // console log details
