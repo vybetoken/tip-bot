@@ -4,6 +4,7 @@
   "description": "TIP BOT",
   "main": "tipbot.js",
   "scripts": {
+    "start": "node tipbot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "nanoissuperior",

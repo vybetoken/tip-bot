@@ -1,36 +1,34 @@
+require("dotenv").config();
 const botgram = require("botgram");
-const bot = botgram("-----"); // SET BOT TOKEN HERE
+const bot = botgram(process.env.BOT_TOKEN);
 const Low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const Adapter = new FileSync("usersdb.json");
 const user_db = Low(Adapter);
 const abiDecoder = require("abi-decoder");
-const buy =
-  "(https://app.uniswap.org/#/swap?outputCurrency=0x3a1c1d1c06be03cddc4d3332f7c20e1b37c97ce9)";
+const buy = "(https://app.uniswap.org/#/swap?outputCurrency=0x3a1c1d1c06be03cddc4d3332f7c20e1b37c97ce9)";
 const fetch = require("node-fetch");
+const Web3 = require("web3");
 
 //admin IDs for admin commands
-admin_ID1 = 0; //SET UUID HERE
-admin_ID2 = 0; //SET UUID HERE
+admin_ID1 = process.env.admin_ID1;
+admin_ID2 = process.env.admin_ID2;
 
 //POT DETAILS
-const potSeed = "---- "; // GENERATE ETH WALLET AND SET DETAILS HERE
-const potAddress = "---- "; //GENERATE ETH WALLET AND SET DETAILS HERE
+const potSeed = process.env.POT_SEED;
+const potAddress = process.env.POT_ADDRESS;
 user_db.defaults({ users: [] }).write();
 // ----------- command functions ---------//
 
 // --------ethereum things-----------//
 const contractABI = require("./contractABI.json");
 abiDecoder.addABI(contractABI);
-const tokenAddress = "0x3A1c1d1c06bE03cDDC4d3332F7C20e1B37c97CE9";
-
-// gets web3
-const Web3 = require("web3");
+const tokenAddress = process.env.VYBE_ADDRESS;
 
 // change this to change the network
-const network = "mainnet";
+const network = process.env.INFURA_NETWORK;
 // change this to change the infuraKey
-const infuraKey = " ---- "; // SET INFURA KEY HERE
+const infuraKey = process.env.INFURA_KEY;
 
 // The url with the network and key put in
 var web3provider = `https://${network}.infura.io/v3/${infuraKey}`;
@@ -68,7 +66,7 @@ setInterval(function (reply) {
   });
 }, 500000);
 
-//filter offline messages
+// Filter offline messages
 bot.all(function (msg, reply, next) {
   if (!msg.queued) next();
 });
@@ -91,7 +89,7 @@ bot.command("halt", function (msg, reply, next) {
   process.exit(0);
 });
 
-//help command
+// Help command
 bot.command("help", function (msg, reply, next) {
   reply.markdown(
     "Commands:\n\n/register - This will register you with the bot. Please note this will be tied to your UUID and **username.**\n" +
@@ -101,13 +99,14 @@ bot.command("help", function (msg, reply, next) {
   );
   console.log("help command triggered");
 });
-//buy command
+
+// Buy command
 bot.command("buy", function (msg, reply, next) {
   reply.markdown("[Uniswap link]" + buy);
   console.log("buy command triggered");
 });
 
-//price command
+// Price command
 bot.command("price", function (msg, reply, next) {
   fetch(`https://api.coingecko.com/api/v3/coins/vybe`)
     .then((res) => res.json())
@@ -140,7 +139,7 @@ bot.command("price", function (msg, reply, next) {
     );
 });
 
-// register command
+// Register command
 bot.command("register", function (msg, reply, next) {
   try {
     console.log("User is registering");
@@ -192,7 +191,7 @@ bot.command("register", function (msg, reply, next) {
   }
 });
 
-//deposit command
+// Deposit command
 bot.command("deposit", function (msg, reply, next) {
   try {
     var sender = msg.from.id;
@@ -260,7 +259,7 @@ bot.command("deposit", function (msg, reply, next) {
   }
 });
 
-//withdraw command
+// Withdraw command
 bot.command("withdraw", function (msg, reply, next) {
   try {
     var msgtype = msg.chat.type;
@@ -428,7 +427,7 @@ bot.command("withdraw", function (msg, reply, next) {
   }
 });
 
-//balance command
+// Balance command
 bot.command("balance", function (msg, reply, text) {
   try {
     console.log("Balance check for " + msg.from.username);
@@ -640,7 +639,7 @@ bot.command("tip", function (msg, reply, next) {
   }
 });
 
-//Update Username
+// Update Username
 bot.command("username", function (msg, reply, next) {
   try {
     var msgtype = msg.chat.type;
