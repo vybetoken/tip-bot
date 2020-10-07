@@ -1,0 +1,21 @@
+{
+  "name": "vybe_tipbot",
+  "version": "1.0.0",
+  "description": "TIP BOT",
+  "main": "tipbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nanoissuperior",
+  "license": "ISC",
+  "dependencies": {
+    "abi-decoder": "^2.3.0",
+    "botgram": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "lowdb": "^1.0.0",
+    "node-fetch": "^2.6.1",
+    "node-telegram-bot-api": "^0.50.0",
+    "telegraf": "^3.38.0",
+    "web3": "^1.3.0"
+  }
+}
