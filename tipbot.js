@@ -384,7 +384,7 @@ bot.command("withdraw", function (msg, reply, next) {
                         destinationAddress
                     );
                     reply.markdown(
-                      "https://rinkeby.etherscan.io/tx/" +
+                      "https://etherscan.io/tx/" +
                         receipt.transactionHash
                     );
                   });
