@@ -96,8 +96,8 @@ bot.command("help", function (msg, reply, next) {
       "\n/tip - Sends tip to person you tag (example : /tip 1 @nanoissuperior)\n" +
       "\n/balance - Shows your current balance\n" +
       "\n/price - Shows the curreny price of one Vybe in USD and ETH\n"+
-      "\n/deposit - Sets your deposit address ( /deposit 0x2*********** )"+
-      "\n/withdraw - withdraws funds to an external account ( /withdraw 0x2********* )"
+      "\n/deposit - Sets your deposit address ( /deposit 0x200000000000000 )\n"+
+      "\n/withdraw - withdraws funds to an external account ( /withdraw 0x200000000000 )"
   );
   console.log("help command triggered");
 });
