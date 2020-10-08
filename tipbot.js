@@ -95,7 +95,9 @@ bot.command("help", function (msg, reply, next) {
     "Commands:\n\n/register - This will register you with the bot. Please note this will be tied to your UUID and **username.**\n" +
       "\n/tip - Sends tip to person you tag (example : /tip 1 @nanoissuperior)\n" +
       "\n/balance - Shows your current balance\n" +
-      "\n/price - Shows the curreny price of one Vybe in USD and ETH\n"
+      "\n/price - Shows the curreny price of one Vybe in USD and ETH\n"+
+      "\n/deposit - Sets your deposit address ( /deposit 0x2*********** )"+
+      "\n/withdraw - withdraws funds to an external account ( /withdraw 0x2********* )"
   );
   console.log("help command triggered");
 });
@@ -167,7 +169,7 @@ bot.command("register", function (msg, reply, next) {
           ///Send wallet and key back to user
           reply.markdown("Thanks for registering");
           reply.markdown(
-            "Please note : Your funds will be liked to your ID AND USERNAME\nTo deposit funds please use the /deposit command."
+            "Please note : Your funds will be linked to your ID AND USERNAME\nTo deposit funds please use the /deposit command."
           );
 
           const accountinfo = {
