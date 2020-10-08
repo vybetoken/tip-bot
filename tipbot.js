@@ -3,7 +3,7 @@ const botgram = require("botgram");
 const bot = botgram(process.env.BOT_TOKEN);
 const Low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
-const Adapter = new FileSync("usersdb.json");
+const Adapter = new FileSync(process.env.DB_PATH);
 const user_db = Low(Adapter);
 const abiDecoder = require("abi-decoder");
 const buy = "(https://app.uniswap.org/#/swap?outputCurrency=0x3a1c1d1c06be03cddc4d3332f7c20e1b37c97ce9)";
