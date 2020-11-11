@@ -53,6 +53,7 @@ if (admin_ID2 === 0) {
 
 setInterval(function (reply) {
   web3.eth.getBalance(potAddress).then((result) => {
+    websocket();
     var ETHbalance = web3.utils.fromWei(result, "ether");
     console.log("ETH balance for fees: " + ETHbalance);
     if (ETHbalance < 0.01) {
@@ -697,46 +698,49 @@ var web3W = new Web3(new Web3.providers.WebsocketProvider(web3providerW));
 var block = user_db.get("block").value();
 
 // ---------- ethereum things --------------- //
-var websocket = web3W.eth.subscribe(
-  "logs",
-  {
-    address: tokenAddress,
-    topics: [
-      "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      ,
-      "0x000000000000000000000000" + addressW,
-    ],
-    fromBlock: block,
-  },
-  function (error, result) {
-    if (!error) {
-      web3.eth.getTransaction(result.transactionHash, function (e, receipt) {
-        if (!e) {
-          console.log("\x1b[33m%s\x1b[0m", "------- DEPOSIT ------");
-          console.log("blockNumber: " + receipt.blockNumber);
-          console.log("transactionHash: " + result.transactionHash);
-          console.log("fromAddress: " + receipt.from);
-          const decodedData = abiDecoder.decodeMethod(receipt.input);
-          console.log(
-            "amount: " +
-              decodedData.params[1].value / 1000000000000000000 +
-              " VYBE"
-          );
-          depositBalance(
-            receipt.from,
-            decodedData.params[1].value / 1000000000000000000,
-            result.transactionHash
-          );
-          updateBlock(receipt.blockNumber);
-        } else {
-          console.log(e);
-        }
-      });
-    } else {
-      console.log(error);
+
+function websocket() {
+  web3W.eth.subscribe(
+    "logs",
+    {
+      address: tokenAddress,
+      topics: [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        ,
+        "0x000000000000000000000000" + addressW,
+      ],
+      fromBlock: block,
+    },
+    function (error, result) {
+      if (!error) {
+        web3.eth.getTransaction(result.transactionHash, function (e, receipt) {
+          if (!e) {
+            console.log("\x1b[33m%s\x1b[0m", "------- DEPOSIT ------");
+            console.log("blockNumber: " + receipt.blockNumber);
+            console.log("transactionHash: " + result.transactionHash);
+            console.log("fromAddress: " + receipt.from);
+            const decodedData = abiDecoder.decodeMethod(receipt.input);
+            console.log(
+              "amount: " +
+                decodedData.params[1].value / 1000000000000000000 +
+                " VYBE"
+            );
+            depositBalance(
+              receipt.from,
+              decodedData.params[1].value / 1000000000000000000,
+              result.transactionHash
+            );
+            updateBlock(receipt.blockNumber);
+          } else {
+            console.log(e);
+          }
+        });
+      } else {
+        console.log(error);
+      }
     }
-  }
-);
+  );
+}
 
 function depositBalance(addressFrom, amount, hash) {
   // checks is this deposit was made by one of our users and if so grabs their details
